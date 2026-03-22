@@ -32,27 +32,32 @@ def editar_lista(txt):
     if txt == 'idade':
         variavel_troca = int(input(f'''Qual a {txt} você deseja colocar no {lista_de_alunos[editar_variavel-1]['nome']}?
 \nDigite aqui: '''))
-    
-    elif txt == 'serie':
-        variavel_troca = int(input(f'''Qual a {txt} você deseja colocar no {lista_de_alunos[editar_variavel-1]['nome']}?
+        if variavel_troca < 15:
+            print('Impossível editar. Idade abaixo do ensino médio!')
+        
+        elif variavel_troca > 18:
+            print('O aluno deve se matricular na Educação de Jovens e Adultos (EJA).')
+        
+        else: 
+            if txt == 'serie':
+                variavel_troca = int(input(f'''Qual a {txt} você deseja colocar no {lista_de_alunos[editar_variavel-1]['nome']}?
 \nDigite aqui: '''))
-        variavel_troca = validar_intervalo(variavel_troca, 3, 1, 'Série inválida. Digite novamente: ')
+                variavel_troca = validar_intervalo(variavel_troca, 3, 1, 'Série inválida. Digite novamente: ')
 
-    else:
-        variavel_troca = str(input(f'''Qual {txt} você deseja colocar no {lista_de_alunos[editar_variavel-1]['nome']}?
-    \nDigite aqui: ''')).upper()
-    
-    match txt:
-        case 'idade': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} agora tem {variavel_troca} anos de idade!')
-        case 'nome': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} foi alterado para {variavel_troca}!')
-        case 'serie': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} agora está na {variavel_troca}º Série!')
+            else:
+                variavel_troca = str(input(f'''Qual {txt} você deseja colocar no {lista_de_alunos[editar_variavel-1]['nome']}?
+            \nDigite aqui: ''')).upper()
+            
+            match txt:
+                case 'idade': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} agora tem {variavel_troca} anos de idade!')
+                case 'nome': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} foi alterado para {variavel_troca}!')
+                case 'serie': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} agora está na {variavel_troca}º Série!')
 
-    lista_de_alunos[editar_variavel-1][f'{txt}'] = variavel_troca
+            lista_de_alunos[editar_variavel-1][f'{txt}'] = variavel_troca
 
 # DEFININDO A LISTA E DICIONÁRIOS
 dados_de_alunos = dict()
 lista_de_alunos = list()
-qnt_de_alunos = 0
 
 # EXECUTANDO O CÓDIGO
 while True:
@@ -68,26 +73,23 @@ while True:
 
     if escolha == 1:
         dados_de_alunos['nome'] = str(input('\nNome: ')).upper()
-        qnt_de_alunos += 1
         
-        dados_de_alunos['idade'] = int(input('Idade: '))
-        if dados_de_alunos['idade'] < 15:
+        idade_aluno = int(input('Idade: '))
+        if idade_aluno < 15:
             print('Aluno não matriculado. Idade abaixo do ensino médio!')
         
-        elif dados_de_alunos['idade'] > 18:
+        elif idade_aluno > 18:
             print('O aluno deve se matricular na Educação de Jovens e Adultos (EJA).')
 
         else:
+            dados_de_alunos['idade'] = idade_aluno
             menu('1º Série (MÉDIO)', '2º Série (MÉDIO)', '3º Série (MÉDIO)')         
             
             serie = int(input('Digite sua opção: '))
             
             serie = validar_intervalo(serie, 3, 1, 'Digito incorreto. Digite novamente: ')
 
-            match serie:
-                case 1: dados_de_alunos['serie'] = serie
-                case 2: dados_de_alunos['serie'] = serie
-                case 3: dados_de_alunos['serie'] = serie
+            dados_de_alunos['serie'] = serie
 
             print(f'{dados_de_alunos["nome"]} da {dados_de_alunos["serie"]}º Série adicionado!')
 
@@ -97,7 +99,7 @@ while True:
     elif escolha == 2:
         if verificar_alunos() == True:
             listagem()
-            print(f'Ao total temos {qnt_de_alunos} aluno(s).')
+            print(f'Ao total temos {len(lista_de_alunos)} aluno(s).')
 
     elif escolha == 3:
         if verificar_alunos() == True:
