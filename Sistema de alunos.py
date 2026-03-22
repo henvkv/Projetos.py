@@ -125,7 +125,6 @@ while True:
         if len(lista_de_alunos) == 0:
             print('\n','<'*5,'VOLTE SEMPRE','>'*5)
             break
-        
         else:
             print('\n','<'*5,'DADOS ATUALIZADOS COM SUCESSO!','>'*5)
             break
