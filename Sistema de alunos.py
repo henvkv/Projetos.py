@@ -53,7 +53,7 @@ def editar_lista(txt):
                 case 'nome': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} foi alterado para {variavel_troca}!')
                 case 'serie': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} agora está na {variavel_troca}º Série!')
 
-            lista_de_alunos[editar_variavel-1][f'{txt}'] = variavel_troca
+            lista_de_alunos[editar_variavel-1][txt] = variavel_troca
 
 # DEFININDO A LISTA E DICIONÁRIOS
 dados_de_alunos = dict()
