@@ -71,26 +71,33 @@ while True:
         qnt_de_alunos += 1
         
         dados_de_alunos['idade'] = int(input('Idade: '))
-
-        menu('1º Série (MÉDIO)', '2º Série (MÉDIO)', '3º Série (MÉDIO)')         
+        if dados_de_alunos['idade'] < 15:
+            print('Aluno não matriculado. Idade abaixo do ensino médio!')
         
-        serie = int(input('Digite sua opção: '))
-        
-        serie = validar_intervalo(serie, 3, 1, 'Digito incorreto. Digite novamente: ')
+        elif dados_de_alunos['idade'] > 18:
+            print('O aluno deve se matricular na Educação de Jovens e Adultos (EJA).')
 
-        match serie:
-            case 1: dados_de_alunos['serie'] = serie
-            case 2: dados_de_alunos['serie'] = serie
-            case 3: dados_de_alunos['serie'] = serie
+        else:
+            menu('1º Série (MÉDIO)', '2º Série (MÉDIO)', '3º Série (MÉDIO)')         
+            
+            serie = int(input('Digite sua opção: '))
+            
+            serie = validar_intervalo(serie, 3, 1, 'Digito incorreto. Digite novamente: ')
 
-        print(f'{dados_de_alunos["nome"]} da {dados_de_alunos["serie"]}º Série adicionado!')
+            match serie:
+                case 1: dados_de_alunos['serie'] = serie
+                case 2: dados_de_alunos['serie'] = serie
+                case 3: dados_de_alunos['serie'] = serie
 
-        lista_de_alunos.append(dados_de_alunos.copy())
-        dados_de_alunos.clear()
+            print(f'{dados_de_alunos["nome"]} da {dados_de_alunos["serie"]}º Série adicionado!')
+
+            lista_de_alunos.append(dados_de_alunos.copy())
+            dados_de_alunos.clear()
 
     elif escolha == 2:
         if verificar_alunos() == True:
             listagem()
+            print(f'Ao total temos {qnt_de_alunos} aluno(s).')
 
     elif escolha == 3:
         if verificar_alunos() == True:
