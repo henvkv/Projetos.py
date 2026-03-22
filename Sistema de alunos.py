@@ -27,9 +27,9 @@ def editar_lista(txt):
 \nDigite aqui: '''))
     
     match txt:
-        case 'idade': print(f'O {lista_de_alunos[variavel-1][txt]} agora tem {variavel_troca} anos de idade!')
-        case 'nome': print(f'O {lista_de_alunos[variavel-1][txt]} foi alterado para {variavel_troca}!')
-        case 'serie': print(f'O {lista_de_alunos[variavel-1][txt]} agora está na {variavel_troca}º Série!')
+        case 'idade': print(f'O {lista_de_alunos[variavel-1]['nome']} agora tem {variavel_troca} anos de idade!')
+        case 'nome': print(f'O {lista_de_alunos[variavel-1]['nome']} foi alterado para {variavel_troca}!')
+        case 'serie': print(f'O {lista_de_alunos[variavel-1]['nome']} agora está na {variavel_troca}º Série!')
 
     lista_de_alunos[variavel-1][f'{txt}'] = variavel_troca
 
