@@ -18,6 +18,20 @@ def verificar_alunos():
         return False
     else:
         return True
+    
+def editar_lista(txt):
+    variavel = int(input(f'\nEscolha o aluno para editar {txt} (1 a {len(lista_de_alunos)}): '))
+    variavel = loop(variavel, len(lista_de_alunos), 1, 'Digito incorreto. Digite novamente: ')
+
+    variavel_troca = str(input(f'''Qual {txt} você deseja colocar no {lista_de_alunos[variavel-1][txt]}?
+\nDigite aqui: '''))
+    
+    match txt:
+        case 'idade': print(f'O {lista_de_alunos[variavel-1][txt]} agora tem {variavel_troca} anos de idade!')
+        case 'nome': print(f'O {lista_de_alunos[variavel-1][txt]} foi alterado para {variavel_troca}!')
+        case 'serie': print(f'O {lista_de_alunos[variavel-1][txt]} agora está na {variavel_troca}º Série!')
+
+    lista_de_alunos[variavel-1][f'{txt}'] = variavel_troca
 
 dados_de_alunos = dict()
 lista_de_alunos = list()
@@ -80,5 +94,26 @@ while True:
             print('\nO que você deseja editar?')
             menu('Nome', 'Idade', 'Série')
 
-            editar = int(input('\nDigite sua ação: '))
+            editar = int(input('Digite sua ação: '))
             editar = loop(editar, 3, 1, 'Digito incorreto. Digite novamente: ')
+
+            if editar == 1:
+                listagem()
+                editar_lista('nome')
+
+            elif editar == 2:
+                listagem()
+                editar_lista('idade')
+
+            elif editar == 3:
+                listagem()
+                editar_lista('serie')
+    
+    else:
+        if len(lista_de_alunos) == 0:
+            print('\n','<'*5,'VOLTE SEMPRE','>'*5)
+            break
+        
+        else:
+            print('\n','<'*5,'DADOS ATUALIZADOS COM SUCESSO!','>'*5)
+            break
