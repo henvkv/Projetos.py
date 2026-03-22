@@ -109,17 +109,10 @@ while True:
             editar = int(input('Digite sua ação: '))
             editar = validar_intervalo(editar, 3, 1, 'Digito incorreto. Digite novamente: ')
 
-            if editar == 1:
-                listagem()
-                editar_lista('nome')
-
-            elif editar == 2:
-                listagem()
-                editar_lista('idade')
-
-            elif editar == 3:
-                listagem()
-                editar_lista('serie')
+            match editar:
+                case 1: listagem(), editar_lista('nome')
+                case 2: listagem(), editar_lista('idade')
+                case 3: listagem(), editar_lista('serie')
     
     else:
         if len(lista_de_alunos) == 0:
