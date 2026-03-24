@@ -1,6 +1,7 @@
 # IMPORT
 from time import sleep 
 
+
 # DEFININDO AS FUNÇÕES
 def menu(*txt):
     for e, texto in enumerate(txt):
@@ -12,9 +13,9 @@ def validar_intervalo(editar_variavel, limite_maximo, limite_minimo, txt):
     return editar_variavel
 
 def listagem():
-    print(f'\n{'No.':<5}{'Nome':<20}{'Idade':<10}{'Série'}')
+    print(f'\n{'No.':<5}{'Nome':<20}{'Idade':<10}{'Série':<10}')
     for a in range(0, len(lista_de_alunos)):
-        print(f'''{a+1:<5}{lista_de_alunos[a]['nome']:<20}{lista_de_alunos[a]['idade']:<10}{lista_de_alunos[a]['serie']}º''')
+        print(f'''{a+1:<5}{lista_de_alunos[a]['nome']:<20}{lista_de_alunos[a]['idade']:<10}{lista_de_alunos[a]['serie']:<10}''')
     sleep(0.50)
 
 def verificar_alunos():
@@ -55,9 +56,12 @@ def editar_lista(txt):
 
             lista_de_alunos[editar_variavel-1][txt] = variavel_troca
 
-# DEFININDO A LISTA E DICIONÁRIOS
+
+# DEFININDO A LISTA/DICIONÁRIOS/VARIAVEL SOMA
 dados_de_alunos = dict()
 lista_de_alunos = list()
+soma = 0
+
 
 # EXECUTANDO O CÓDIGO
 while True:
@@ -65,10 +69,9 @@ while True:
     print('-'*30)
     print('SISTEMA DE ALUNOS'.center(30))
     print('-'*30)
-    menu('Adicionar aluno', 'Listar alunos', 'Excluir aluno', 'Editar', 'Sair')
+    menu('Adicionar aluno', 'Listar alunos', 'Excluir aluno', 'Editar','Gerar boletim', 'Sair')
 
     escolha = int(input('Escolha a sua opção: '))
-
     escolha = validar_intervalo(escolha, 5, 1, 'Digito incorreto. Digite novamente: ')
 
     if escolha == 1:
@@ -86,12 +89,18 @@ while True:
             menu('1º Série (MÉDIO)', '2º Série (MÉDIO)', '3º Série (MÉDIO)')         
             
             serie = int(input('Digite sua opção: '))
-            
             serie = validar_intervalo(serie, 3, 1, 'Digito incorreto. Digite novamente: ')
+            dados_de_alunos['serie'] = f'{serie}º'
 
-            dados_de_alunos['serie'] = serie
-
-            print(f'{dados_de_alunos["nome"]} da {dados_de_alunos["serie"]}º Série adicionado!')
+            for n in range(1,4):
+                nota = float(input(f'\nDigite a nota do {dados_de_alunos["nome"]} no {n}º Trimestre (Digite 0 se não tiver): '))
+                soma += nota
+                if nota == 0:
+                    print(f'{dados_de_alunos["nome"]} da {dados_de_alunos["serie"]} Série adicionado!')
+                    break
+            
+            dados_de_alunos['media'] = soma/3
+            soma = 0
 
             lista_de_alunos.append(dados_de_alunos.copy())
             dados_de_alunos.clear()
@@ -122,7 +131,24 @@ while True:
                 case 1: listagem(), editar_lista('nome')
                 case 2: listagem(), editar_lista('idade')
                 case 3: listagem(), editar_lista('serie')
-    
+
+    elif escolha == 5:
+        if verificar_alunos() == True:
+            print(f'\n{'No.':<5}{'Nome':<20}{'média':<10}{'Status':<10}')
+
+            for a in range(0, len(lista_de_alunos)):
+                if lista_de_alunos[a]['media'] >= 7:
+                    status = 'Aprovado'
+                    lista_de_alunos[a]['status'] = status
+                else:
+                    status = 'Reprovado'
+                    lista_de_alunos[a]['status'] = status
+
+            for b in range(0, len(lista_de_alunos)):
+                print(f'''{b+1:<5}{lista_de_alunos[b]['nome']:<20}{lista_de_alunos[b]['media']:<10}{lista_de_alunos[b]['status']:<10}''')
+            sleep(1)
+
+
     else:
         if len(lista_de_alunos) == 0:
             print('\n','<'*5,'VOLTE SEMPRE','>'*5)
