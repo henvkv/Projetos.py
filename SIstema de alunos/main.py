@@ -1,60 +1,6 @@
 # IMPORT
 from time import sleep 
-
-
-# DEFININDO AS FUNÇÕES
-def menu(*txt):
-    for e, texto in enumerate(txt):
-        print(f'[{e+1}] {texto}')
-    
-def validar_intervalo(editar_variavel, limite_maximo, limite_minimo, txt):
-    while editar_variavel > limite_maximo or editar_variavel < limite_minimo:
-        editar_variavel = int(input(txt))
-    return editar_variavel
-
-def listagem():
-    print(f'\n{'No.':<5}{'Nome':<20}{'Idade':<10}{'Série':<10}')
-    for a in range(0, len(lista_de_alunos)):
-        print(f'''{a+1:<5}{lista_de_alunos[a]['nome']:<20}{lista_de_alunos[a]['idade']:<10}{lista_de_alunos[a]['serie']:<10}''')
-    sleep(0.50)
-
-def verificar_alunos():
-    if len(lista_de_alunos) == 0:
-        print('Nenhum aluno cadastrado! Digite outra opção.')
-        sleep(0.25)
-        return False
-    else:
-        return True
-    
-def editar_lista(txt):
-    editar_variavel = int(input(f'\nEscolha o aluno para editar {txt} (1 a {len(lista_de_alunos)}): '))
-    editar_variavel = validar_intervalo(editar_variavel, len(lista_de_alunos), 1, 'Digito incorreto. Digite novamente: ')
-
-    if txt == 'idade':
-        variavel_troca = int(input(f'''Qual a {txt} você deseja colocar no {lista_de_alunos[editar_variavel-1]['nome']}?
-\nDigite aqui: '''))
-        if variavel_troca < 15:
-            print('Impossível editar. Idade abaixo do ensino médio!')
-        
-        elif variavel_troca > 18:
-            print('O aluno deve se matricular na Educação de Jovens e Adultos (EJA).')
-        
-        else: 
-            if txt == 'serie':
-                variavel_troca = int(input(f'''Qual a {txt} você deseja colocar no {lista_de_alunos[editar_variavel-1]['nome']}?
-\nDigite aqui: '''))
-                variavel_troca = validar_intervalo(variavel_troca, 3, 1, 'Série inválida. Digite novamente: ')
-
-            else:
-                variavel_troca = str(input(f'''Qual {txt} você deseja colocar no {lista_de_alunos[editar_variavel-1]['nome']}?
-            \nDigite aqui: ''')).upper()
-            
-            match txt:
-                case 'idade': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} agora tem {variavel_troca} anos de idade!')
-                case 'nome': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} foi alterado para {variavel_troca}!')
-                case 'serie': print(f'O {lista_de_alunos[editar_variavel-1]['nome']} agora está na {variavel_troca}º Série!')
-
-            lista_de_alunos[editar_variavel-1][txt] = variavel_troca
+from tools import menu, validar_intervalo, listagem, verificar_alunos, editar_lista
 
 
 # DEFININDO A LISTA/DICIONÁRIOS/VARIAVEL SOMA
@@ -72,7 +18,7 @@ while True:
     menu('Adicionar aluno', 'Listar alunos', 'Excluir aluno', 'Editar','Gerar boletim', 'Sair')
 
     escolha = int(input('Escolha a sua opção: '))
-    escolha = validar_intervalo(escolha, 5, 1, 'Digito incorreto. Digite novamente: ')
+    escolha =   validar_intervalo(escolha, 5, 1, 'Digito incorreto. Digite novamente: ')
 
     if escolha == 1:
         dados_de_alunos['nome'] = str(input('\nNome: ')).upper()
@@ -93,9 +39,9 @@ while True:
             dados_de_alunos['serie'] = f'{serie}º'
 
             for n in range(1,4):
-                nota = float(input(f'\nDigite a nota do {dados_de_alunos["nome"]} no {n}º Trimestre (Digite 0 se não tiver): '))
+                nota = float(input(f'\nDigite a nota do {dados_de_alunos["nome"]} no {n}º Trimestre (Digite 999 se não tiver): '))
                 soma += nota
-                if nota == 0:
+                if nota == 999:
                     print(f'{dados_de_alunos["nome"]} da {dados_de_alunos["serie"]} Série adicionado!')
                     break
             
@@ -106,13 +52,13 @@ while True:
             dados_de_alunos.clear()
 
     elif escolha == 2:
-        if verificar_alunos() == True:
-            listagem()
+        if  verificar_alunos(lista_de_alunos) == True:
+            listagem(lista_de_alunos)
             print(f'Ao total temos {len(lista_de_alunos)} aluno(s).')
 
     elif escolha == 3:
-        if verificar_alunos() == True:
-            listagem()
+        if  verificar_alunos(lista_de_alunos) == True:
+            listagem(lista_de_alunos)
             excluir_aluno = int(input('\nDigite o número do aluno para excluir: '))
             excluir_aluno = validar_intervalo(excluir_aluno, len(lista_de_alunos), 1, 'Digito incorreto. Digite novamente: ')
 
@@ -120,20 +66,20 @@ while True:
             del lista_de_alunos[excluir_aluno-1]
 
     elif escolha == 4:
-        if verificar_alunos() == True:
+        if  verificar_alunos(lista_de_alunos) == True:
             print('\nO que você deseja editar?')
             menu('Nome', 'Idade', 'Série')
 
             editar = int(input('Digite sua ação: '))
-            editar = validar_intervalo(editar, 3, 1, 'Digito incorreto. Digite novamente: ')
+            editar =    validar_intervalo(editar, 3, 1, 'Digito incorreto. Digite novamente: ')
 
             match editar:
-                case 1: listagem(), editar_lista('nome')
-                case 2: listagem(), editar_lista('idade')
-                case 3: listagem(), editar_lista('serie')
+                case 1: listagem(lista_de_alunos),  editar_lista('nome',lista_de_alunos)
+                case 2: listagem(lista_de_alunos),  editar_lista('idade',lista_de_alunos)
+                case 3: listagem(lista_de_alunos),  editar_lista('serie',lista_de_alunos)
 
     elif escolha == 5:
-        if verificar_alunos() == True:
+        if  verificar_alunos(lista_de_alunos) == True:
             print(f'\n{'No.':<5}{'Nome':<20}{'média':<10}{'Status':<10}')
 
             for a in range(0, len(lista_de_alunos)):
