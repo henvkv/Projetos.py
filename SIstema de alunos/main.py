@@ -39,13 +39,15 @@ while True:
             dados_de_alunos['serie'] = f'{serie}º'
 
             for n in range(1,4):
-                nota = float(input(f'\nDigite a nota do {dados_de_alunos["nome"]} no {n}º Trimestre (Digite 999 se não tiver): '))
-                soma += nota
-                if nota == 999:
+                nota = float(input(f'\nDigite a nota do {dados_de_alunos["nome"]} no {n}º Trimestre (Digite 11 se não tiver): '))
+                nota = validar_intervalo(nota, 11, 0, 'Nota inválida. Digite novamente: ')
+                if nota == 11:
                     print(f'{dados_de_alunos["nome"]} da {dados_de_alunos["serie"]} Série adicionado!')
                     break
+                else:
+                    soma += nota
             
-            dados_de_alunos['media'] = soma/3
+            dados_de_alunos['media'] = float(f'{soma/3:.2f}')
             soma = 0
 
             lista_de_alunos.append(dados_de_alunos.copy())
